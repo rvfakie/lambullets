@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    Hello world
+    Hello header
   </div>
 </template>
 
