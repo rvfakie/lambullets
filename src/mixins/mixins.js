@@ -59,7 +59,7 @@ export const initMixins = () => {
         if (!results[2]) return '';
         return decodeURIComponent(results[2].replace(/\+/g, " "));
       },
-      getCookie(name) {
+      getCookieByName(name) {
         const escape = (s) => { 
           return s.replace(/([.*+?\^${}()|\[\]\/\\])/g, '\\$1'); 
         };
