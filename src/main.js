@@ -3,11 +3,21 @@
 import Vue from 'vue'
 import App from './App'
 
-Vue.config.productionTip = false
+import { store } from './store/store'
+import { initMixins } from './mixins/mixins'
+import { initWindowVariables } from './utils/window-variables'
+
+Vue.config.productionTip = false;
+
+// Init global Vue methods
+initMixins();
+// Init global window variables;
+initWindowVariables();
 
 /* eslint-disable no-new */
-new Vue({
+const app = new Vue({
   el: '#app',
-  components: { App },
-  template: '<App/>'
+  store,
+  template: '<App/>',
+  components: { App }
 })
