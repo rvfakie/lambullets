@@ -22,7 +22,7 @@
     <div class="bullets-image-panel">
         <div class="bullets-image-info"></div>
         <div class="bullets-image-code">
-          <BulletsCode :bullets="bullets" :imageIndex="imageIndex" />
+          <BulletsCode :bullets="bullets" :image="image" :imageIndex="imageIndex" />
         </div>
     </div>
     
