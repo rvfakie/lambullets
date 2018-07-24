@@ -1,6 +1,6 @@
 <template>
   <div class="bullets-image-item">
-    <h1 class="bullets-image-name">Изображение {{imageIndex + 1}}</h1>
+    <h1 class="bullets-image-name">Image {{imageIndex + 1}}</h1>
 
     <div class="bullets-image-wrapper">
       <div class="bullets-image">

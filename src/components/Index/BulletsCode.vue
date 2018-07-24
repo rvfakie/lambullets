@@ -114,5 +114,19 @@
     }
   }
 
+  @media (max-width: 780px) {
+    .code-wrapper{
+      flex-direction: column;
+    }
+    .code-half-container{
+      width: 100%;
+      margin-bottom: 40px;
+      &:last-child{
+        margin-bottom: 0;
+      }
+    }
+
+  }
+
 </style>
 

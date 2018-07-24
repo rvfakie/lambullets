@@ -55,6 +55,12 @@ export default {
   .content {
     max-width: 1020px;
     margin: auto;
-    padding-top: 100px;
+    padding: 100px 20px;
+
+    @media (max-width: 780px) {
+      padding: 50px 20px;
+    }
   }
+
+
 </style>
