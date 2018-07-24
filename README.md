@@ -1,6 +1,7 @@
-# lambullets
+# LAM Bullets
 
-> lambullets
+###### Application for placing bullets on images and getting source code
+Made with ❤️and Vue.js by [khmaralex](https://github.com/khmaralex "khmaralex") and [fakie](https://github.com/rvfakie "fakie")
 
 ## Build Setup
 
@@ -19,3 +20,5 @@ npm run build --report
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+
