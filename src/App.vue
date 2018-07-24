@@ -1,17 +1,15 @@
 <template>
   <div id="app">
-    <Header />
     <Index />
   </div>
 </template>
 
 <script>
-import Index from './components/Content/Index'
-import Header from './components/Header/Header'
+import Index from './components/Index'
 
 export default {
   name: 'App',
-  components: { Index, Header }
+  components: { Index }
 }
 </script>
 
@@ -57,5 +55,6 @@ export default {
   .content {
     max-width: 1020px;
     margin: auto;
+    padding-top: 100px;
   }
 </style>
