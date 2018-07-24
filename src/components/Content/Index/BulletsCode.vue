@@ -41,8 +41,8 @@
 
         <div v-for="(bullet, bulletIndex) in bullets" :key="bullet.id">
           <span class="class-name">.lam-bullet-{{ imageIndex + 1 }}-{{ bulletIndex + 1 }}</span> {
-            <div>&nbsp;&nbsp; <span class="property-name">top</span>: {{ bullet.top }}px;</div>
-            <div>&nbsp;&nbsp; <span class="property-name">left</span>: {{ bullet.left }}px;</div>
+            <div>&nbsp;&nbsp; <span class="property-name">top</span>: {{ bullet.percentTop }}%;</div>
+            <div>&nbsp;&nbsp; <span class="property-name">left</span>: {{ bullet.percentLeft }}%;</div>
           }
         </div>
       </div>

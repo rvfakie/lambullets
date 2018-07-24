@@ -1,79 +1,88 @@
 <template>
-  <div class="bullets-image-wrapper">
-  
-    <div class="bullets-image">
-      <img :src="image.url" @click="addBullet($event)">
+  <div class="bullets-image-item">
+    <h1 class="bullets-image-name">Изображение {{imageIndex + 1}}</h1>
 
-      <div
-        v-bind:style="{
-          top: bullet.top + 'px',
-          left: bullet.left + 'px',
-          width: 2 * bulletRadius + 'px',
-          height: 2 * bulletRadius + 'px',
-        }"
-        v-for="(bullet, bulletIndex) in bullets"
-        @click="bulletHandler($event, bullet.id)"
-        :key="bullet.id"
-        class="bullet">
+    <div class="bullets-image-wrapper">
+      <div class="bullets-image">
+        <img :src="image.url" @click="addBullet($event)">
 
-          {{ bulletIndex + 1}}
+        <div
+          class="bullet"
+          v-bind:style="getBulletStyles(bullet)"
+          @click="removeBullet(bullet.id)"
+          v-for="(bullet, bulletIndex) in bullets"
+          :key="bullet.id"
+        >
+          <div class="bullet__number">{{bulletIndex + 1}}</div>
+        </div>
+
       </div>
-
     </div>
 
     <div class="bullets-image-panel">
-      <div class="bullets-image-config">
-        <input type="number" class="bullet-radius" name="bullet-radius" placeholder="Bullet radius" step="1" />
-      </div>
-      <div class="bullets-image-code"></div>
-      <BulletsCode :bullets="bullets" :imageIndex="imageIndex" />
+        <div class="bullets-image-info"></div>
+        <div class="bullets-image-code">
+          <BulletsCode :bullets="bullets" :imageIndex="imageIndex" />
+        </div>
     </div>
-
+    
   </div>
 </template>
 
 
 <script>
-let bulletId = 0;
-
-function getBulletPosition(event, bulletRadius) {
-  let imageWrapper = event.currentTarget.parentNode;
-
-  let mousePos = {
-    x: event.pageX,
-    y: event.pageY
-  };
-
-  return {
-    top: mousePos.y - imageWrapper.offsetTop - bulletRadius,
-    left: mousePos.x - imageWrapper.offsetLeft - bulletRadius
-  };
-}
-
 import BulletsCode from './BulletsCode'
 
+const getBulletPosition = (event) => {
+  let imageWrapper = event.currentTarget.parentNode;
+
+  let pxPosition = {
+    top: event.pageY - imageWrapper.offsetTop,
+    left: event.pageX - imageWrapper.offsetLeft
+  }
+
+  let percentPosition = {
+    percentTop: pxPosition.top / event.currentTarget.clientHeight * 100,
+    percentLeft: pxPosition.left / event.currentTarget.clientWidth * 100
+  }
+
+  return percentPosition;
+}
+
 export default {
-  props: ['image', 'imageIndex'],
+
+  props: {
+    image: {
+      type: Object,
+      required: true
+    },
+    imageIndex: {
+      type: Number,
+      required: true
+    }
+  },
+
   components: { BulletsCode },
+
   data(){
     return {
       bullets: [],
-      bulletRadius: 10
+      bulletDiameter: 25
     }
   },
+
   methods: {
+
     addBullet(event){
-      let bulletPosition = getBulletPosition(event, this.bulletRadius);
+      let bulletPosition = getBulletPosition(event);
 
       this.bullets.push({
-        id: ++bulletId,
-        top: bulletPosition.top,
-        left: bulletPosition.left
+        id: this.generateId(),
+        percentTop: bulletPosition.percentTop,
+        percentLeft: bulletPosition.percentLeft
       });
     },
-    moveBullet(event){
 
-    },
     removeBullet(id){
       let bulletIndex = this.bullets.findIndex(bullet => bullet.id === id);
 
@@ -82,9 +91,15 @@ export default {
       }
     },
 
-    bulletHandler(event,bulletId){
-      this.removeBullet(bulletId);
+    getBulletStyles(bullet){
+      return {
+        top: bullet.percentTop + '%',
+        left: bullet.percentLeft + '%',
+        width: this.bulletDiameter + 'px',
+        height: this.bulletDiameter + 'px',
+      };
     }
+
   }
 }
 
@@ -92,13 +107,23 @@ export default {
 
 
 <style lang="scss">
-  .bullets-image-wrapper{
+  .bullets-image-item{
     margin-bottom: 200px;
+  }
+
+  .bullets-image-name{
+    margin-bottom: 20px;
+  }
+
+  .bullets-image-wrapper{
+    margin-bottom: 30px;
   }
 
   .bullets-image{
     position: relative;
     display: inline-block;
+    box-shadow: 0 0 0 1px #aaa;
+    cursor: crosshair;
     line-height: 0;
 
     img{
@@ -109,16 +134,23 @@ export default {
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: red;
-      box-shadow: inset 0 0 0 2px black;
+      width: 25px;
+      height: 25px;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: #fff;
+      border-radius: 50%;
+      background: #003cff;
+      box-shadow: inset 0 0 0 2px black;
+      transform: translate(-50%,-50%);
+      cursor: pointer;
+      
+      .bullet__number{
+        margin: auto;
+        font-size: 12px;
+        line-height: 15px;
+        font-weight: bold;
+        color: white;
+        user-select: none;
+      }
     }
   }
 
