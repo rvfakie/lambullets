@@ -56,9 +56,9 @@
     },
     methods: {
       copyRaw(bullets, imageIndex) {
-        let res = `.lam-bullet-image-${imageIndex + 1}{\n};\n`;
+        let res = `.lam-bullet-image-${imageIndex + 1}{}`;
         bullets.forEach((el, bulletIndex) => {
-          res += `.lam-bullet-${imageIndex + 1}-${bulletIndex + 1}{\ntop:${el.percentTop}%;left:${el.percentLeft}%};`
+          res += `.lam-bullet-${imageIndex + 1}-${bulletIndex + 1}{top:${el.percentTop}%;left:${el.percentLeft}%;}`
         });
         if (this.copyToClipboard(res)) {
           const element = document.querySelector(`.code-copy-raw[data-id="cr-${imageIndex}"] .code-copy-action`);
