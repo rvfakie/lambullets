@@ -29,8 +29,8 @@ export default {
           const reader = new FileReader();
           reader.onloadend = () => {
             this.images.push({
-              url: reader.result,
-              bullets: []
+              id: this.generateId(),
+              url: reader.result
             })
           }
           reader.readAsDataURL(el);
