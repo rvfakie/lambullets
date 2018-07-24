@@ -11,11 +11,13 @@
           width: 2 * bulletRadius + 'px',
           height: 2 * bulletRadius + 'px',
         }"
-        v-for="bullet in bullets"
+        v-for="(bullet, bulletIndex) in bullets"
         @click="bulletHandler($event, bullet.id)"
         :key="bullet.id"
-        class="bullet"
-      ></div>
+        class="bullet">
+
+          {{ bulletIndex + 1}}
+      </div>
 
     </div>
 
@@ -24,6 +26,7 @@
         <input type="number" class="bullet-radius" name="bullet-radius" placeholder="Bullet radius" step="1" />
       </div>
       <div class="bullets-image-code"></div>
+      <BulletsCode :bullets="bullets" :imageIndex="imageIndex" />
     </div>
 
   </div>
@@ -47,13 +50,11 @@ function getBulletPosition(event, bulletRadius) {
   };
 }
 
+import BulletsCode from './BulletsCode'
+
 export default {
-  props: {
-    image: {
-      type: Object,
-      required: true
-    }
-  },
+  props: ['image', 'imageIndex'],
+  components: { BulletsCode },
   data(){
     return {
       bullets: [],
@@ -113,6 +114,11 @@ export default {
       border-radius: 50%;
       background: red;
       box-shadow: inset 0 0 0 2px black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #fff;
     }
   }
 

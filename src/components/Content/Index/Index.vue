@@ -40,8 +40,5 @@
     text-transform: uppercase;
     margin-bottom: 60px;
   }
-  h3 {
-    margin-bottom: 10px;
-  }
 
 </style>

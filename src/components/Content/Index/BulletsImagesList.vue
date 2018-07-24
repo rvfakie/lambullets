@@ -1,6 +1,6 @@
 <template>
   <div class="bullets-images-wrapper">
-    <BulletsImageItem v-for="image in images" :image="image" :key="image.id"/>
+    <BulletsImageItem v-for="(image, imageIndex) in images" :image="image" :imageIndex="imageIndex" :key="image.id"/>
   </div>
 </template>
 
