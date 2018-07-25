@@ -1,7 +1,7 @@
 <template>
   <div class="files-upload-container">
     <input type="file" accept="image/x-png, image/gif, image/jpeg" multiple @change="invoke($event)" />
-    <div class="upload-button">drag'n'drop or click to add image</div>
+    <div class="upload-button">drag'n'drop or click to add images</div>
   </div>
 </template>
 
