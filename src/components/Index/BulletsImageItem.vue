@@ -4,13 +4,13 @@
 
     <div class="bullets-image-wrapper">
       <div class="bullets-image">
-        <img :src="image.url" @click="addBullet($event)">
+        <img :src="image.url" @click="addBullet($event, image.bullets)">
 
         <div
           class="bullet"
-          v-bind:style="getBulletStyles(bullet)"
-          @click="removeBullet(bullet.id)"
-          v-for="(bullet, bulletIndex) in bullets"
+          :style="getBulletStyles(bullet)"
+          @click="removeBullet(bullet.id, image.bullets)"
+          v-for="(bullet, bulletIndex) in image.bullets"
           :key="bullet.id"
         >
           <div class="bullet__number">{{bulletIndex + 1}}</div>
@@ -22,7 +22,7 @@
     <div class="bullets-image-panel">
         <div class="bullets-image-info"></div>
         <div class="bullets-image-code">
-          <BulletsCode :bullets="bullets" :image="image" :imageIndex="imageIndex" />
+          <BulletsCode :image="image" :imageIndex="imageIndex" />
         </div>
     </div>
     
@@ -66,28 +66,27 @@ export default {
 
   data(){
     return {
-      bullets: [],
       bulletDiameter: 25
     }
   },
 
   methods: {
 
-    addBullet(event){
+    addBullet(event, bullets){
       let bulletPosition = getBulletPosition(event);
 
-      this.bullets.push({
+      bullets.push({
         id: this.generateId(),
         percentTop: bulletPosition.percentTop,
         percentLeft: bulletPosition.percentLeft
       });
     },
 
-    removeBullet(id){
-      let bulletIndex = this.bullets.findIndex(bullet => bullet.id === id);
+    removeBullet(id, bullets){
+      let bulletIndex = bullets.findIndex(bullet => bullet.id === id);
 
       if (bulletIndex !== -1) {
-        this.bullets.splice(bulletIndex, 1);
+        bullets.splice(bulletIndex, 1);
       }
     },
 

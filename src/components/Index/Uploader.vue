@@ -30,7 +30,8 @@ export default {
           reader.onloadend = () => {
             this.images.push({
               id: this.generateId(),
-              url: reader.result
+              url: reader.result,
+              bullets: []
             })
           }
           reader.readAsDataURL(el);

@@ -1,5 +1,6 @@
 <template>
   <div class="content-wrapper">
+    <ControlPanel :images="images" />
     <div class="content">
       <h1>LAM Bullets</h1>
       <Uploader :images="images" />
@@ -12,10 +13,11 @@
 
   import BulletsImagesList from './BulletsImagesList'
   import Uploader from './Uploader'
+  import ControlPanel from './ControlPanel'
 
   export default {
     name: 'Index',
-    components: { Uploader, BulletsImagesList },
+    components: { Uploader, ControlPanel, BulletsImagesList },
     data() {
       return {
         images: []

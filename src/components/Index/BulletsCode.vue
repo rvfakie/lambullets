@@ -1,12 +1,12 @@
 <template>
-  <div class="code-wrapper" v-if="bullets.length">
+  <div class="code-wrapper" v-if="image.bullets.length">
     
     <div class="code-half-container">
       <h3>HTML</h3>
       <div class="code-container">
         <div>
           &lt;<span class="tag-name">div</span> <span class="tag-class">class</span>=<span class="tag-class-name">"lam-bullet-image lam-bullet-image-{{ imageIndex + 1 }}"</span>&gt;
-            <div v-for="(bullet, bulletIndex) in bullets" :key="bullet.id">
+            <div v-for="(bullet, bulletIndex) in image.bullets" :key="bullet.id">
               &nbsp;&nbsp;&lt;<span class="tag-name">div</span> <span class="tag-class">class</span>=<span class="tag-class-name">"lam-bullet lam-bullet-{{ imageIndex + 1 }}-{{ bulletIndex + 1 }}"</span>&gt;&lt;/<span class="tag-name">div</span>&gt;
             </div>
           &lt;/<span class="tag-name">div</span>&gt;
@@ -17,7 +17,7 @@
     <div class="code-half-container">
       <h3>CSS</h3>
       <div class="code-container">
-        <div class="code-copy-raw" @click="copyRaw(bullets, imageIndex)" :data-id="`cr-${imageIndex}`">
+        <div class="code-copy-raw" @click="copyRaw(image.bullets, imageIndex)" :data-id="`cr-${imageIndex}`">
           Copy raw
           <div class="code-copy-action">Copied</div>
         </div>
@@ -28,7 +28,7 @@
             }
           </div>
 
-          <div v-for="(bullet, bulletIndex) in bullets" :key="bullet.id">
+          <div v-for="(bullet, bulletIndex) in image.bullets" :key="bullet.id">
             <span class="class-name">.lam-bullet-{{ imageIndex + 1 }}-{{ bulletIndex + 1 }}</span> {
               <div>&nbsp;&nbsp;<span class="property-name">top</span>: {{ bullet.percentTop }}%;</div>
               <div>&nbsp;&nbsp;<span class="property-name">left</span>: {{ bullet.percentLeft }}%;</div>
@@ -45,7 +45,7 @@
 <script>
 
   export default {
-    props: ['bullets', 'image', 'imageIndex'],
+    props: ['image', 'imageIndex'],
     data(){
       return {
         
