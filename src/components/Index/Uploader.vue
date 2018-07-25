@@ -24,14 +24,17 @@ export default {
 
       for (let key in input.files) {
         if (key !== 'length' && key !== 'item') {
+          const id = this.generateId();
           const el = input.files[key];
 
+          this.images.push({id, name: el.name.split('.')[0]});
+          this.images.sort((a,b) => { return a.name > b.name });
+          el.id = id;
+          
           const reader = new FileReader();
           reader.onloadend = () => {
-            this.images.push({
-              id: this.generateId(),
-              url: reader.result
-            })
+            const imageObject = this.images.find(key => key.id === el.id);
+            this.$set(imageObject, 'url', reader.result);
           }
           reader.readAsDataURL(el);
         }
