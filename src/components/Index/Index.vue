@@ -3,19 +3,19 @@
     <div class="content">
       <h1>LAM Bullets</h1>
       <Uploader :images="images" />
-      <BulletsImagesList :images="images" />
+      <Content :images="images" />
     </div>
   </div>
 </template>
 
 <script>
 
-  import BulletsImagesList from './BulletsImagesList'
+  import Content from './Content'
   import Uploader from './Uploader'
 
   export default {
     name: 'Index',
-    components: { Uploader, BulletsImagesList },
+    components: { Uploader, Content },
     data() {
       return {
         images: []
