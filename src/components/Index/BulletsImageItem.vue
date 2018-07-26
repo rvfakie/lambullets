@@ -81,6 +81,12 @@ export default {
         percentTop: bulletPosition.percentTop,
         percentLeft: bulletPosition.percentLeft
       });
+
+      this.$emit('change-bullets', {
+        bullets: this.bullets,
+        imageIndex: this.imageIndex,
+        imageId: this.image.id
+      });
     },
 
     removeBullet(id){
@@ -88,7 +94,14 @@ export default {
 
       if (bulletIndex !== -1) {
         this.bullets.splice(bulletIndex, 1);
+
+        this.$emit('change-bullets', {
+          bullets: this.bullets,
+          imageIndex: this.imageIndex,
+          imageId: this.image.id
+        });
       }
+      
     },
 
     getBulletStyles(bullet){

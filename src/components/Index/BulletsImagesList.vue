@@ -1,7 +1,14 @@
 <template>
   <div class="bullets-images-wrapper">
-    <BulletsImageItem v-for="(image, imageIndex) in images" :image="image" :imageIndex="imageIndex" :key="image.id"/>
+    <BulletsImageItem
+      v-for="(image, imageIndex) in images"
+      :image="image"
+      :imageIndex="imageIndex"
+      :key="image.id"
+      v-on:change-bullets="onChangeBullets"
+    />
   </div>
+  
 </template>
 
 
@@ -19,10 +26,16 @@ export default {
   },
   data(){
     return {
+      allBullets: []
     }
   },
   methods: {
-
+    onChangeBullets ({bullets, imageIndex, imageId}) {
+      this.$set(this.allBullets, imageIndex, {
+        imageId,
+        bullets
+      });
+    }
   }
 }
 
