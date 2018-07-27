@@ -27,7 +27,7 @@ export default {
           const id = this.generateId();
           const el = input.files[key];
 
-          this.images.push({id, name: el.name.split('.')[0]});
+          this.images.push({id, name: parseInt(el.name.split('.')[0]), bullets: []});
           this.images.sort((a,b) => { return a.name > b.name });
           el.id = id;
           

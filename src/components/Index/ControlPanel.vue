@@ -1,9 +1,10 @@
 <template>
   <div class="control-panel-wrapper">
-    <ControlPopup :visible="visible" :togglePopup="togglePopup" />
-    <div class="control-panel-container">
-      <div class="panel-button" @click="togglePopup()">s</div>
-      <div class="panel-button"></div>
+    <ControlPopup :images="images" :visible="visible" :togglePopup="togglePopup" />
+    <div class="control-panel-wrapper">
+      <div class="panel-container">
+        <div class="panel-button" @click="togglePopup()"><i class="fas fa-code"></i></div>
+      </div>
     </div>
   </div>
 </template>
@@ -38,12 +39,10 @@ export default {
 
 <style lang="scss" scoped>
 
-  .control-panel-container {
+  .control-panel-wrapper {
     position: fixed;
     width: 60px;
     height: 500px;
-    background: #fff;
-    padding: 10px;
     box-sizing: border-box;
     left: 0;
     top: 0;
@@ -54,17 +53,30 @@ export default {
     align-items: center;
     justify-content: center;
   }
+  .panel-container {
+    padding: 50px 10px;
+    background: #fff;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
+    border: 1px solid #f3f3f3;
+    width: 100%;
+    box-sizing: border-box;
+  }
   .panel-button {
     height: 40px;
     width: 100%;
-    border: 1px solid #cecece;
+    border: 1px solid #DDE5EC;
     border-radius: 2px;
     box-sizing: border-box;
     margin-bottom: 10px;
     cursor: pointer;
-    transition: background .15s;
+    transition: border .15s, color .15s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #8B90A4;
     &:hover {
-      background: #eee;
+      border: 1px solid #a9b7c4;
+      color: #003cff;
     }
     &:last-child {
       margin-bottom: 0;

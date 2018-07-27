@@ -12,7 +12,7 @@
 
 export default {
   name: 'ControlPopup',
-  props: ['visible', 'togglePopup'],
+  props: ['visible', 'togglePopup', 'images'],
   data(){
     return {
       l: 2
@@ -20,28 +20,61 @@ export default {
   },
   computed: {
     computeValue() {
-      return `
-        <script>
-          ;(function() {
-            document.querySelectorAll('.class').forEach(function(el, index) {
-              el.classlist.add('lam-bullet-image lam-bullet-image-'+index + 1);
-              ${this.getBullets()}
-            })
-          })();
-        <\/script>
-      `
+      return `<script>${this.generateJs()}<\/script><style>${this.generateCss()}</style>`;
     }
   },
   methods: {
-    getBullets() {
-      let result = '';
-      for (let x = 0; x < this.l; x++) {
-        result += `var image${x + 1}BulletsLength = 3;
-              for (var x = 0; x < image${x + 1}BulletsLength; x++) {
-                el.appendChild('<div class="lam-bullet lam-bullet-'+x + 1"></div>');
-              }`
-      }
-      return result;
+    generateJs() {
+      let js = `
+        ;(function() {
+          var c = '.stk-image-figure';
+           var images = ${JSON.stringify(this.images.map(image => {
+            return {bullets: image.bullets.map(bullet => {
+              return {top: bullet.top, left: bullet.left};
+            })};
+          }))};
+
+          images.forEach(function(image, imageIndex) {
+            var element = document.querySelectorAll(c)[imageIndex];
+            element.classList.add('lam-bullet-image');
+            element.classList.add('lam-bullet-image-'+ (imageIndex + 1));
+            image.bullets.forEach(function(bullet, bulletIndex) {
+              var child = document.createElement('div');
+              child.classList.add('lam-bullet');
+              child.classList.add('lam-bullet-'+ (imageIndex + 1) +'-'+ (bulletIndex + 1));
+              child.innerHTML = bulletIndex + 1;
+              element.appendChild(child);
+            });
+          });
+
+        })();
+      `;
+      
+
+      return js;
+    },
+    generateCss() {
+      let css = `
+      .lam-bullet-image { position: relative !important; }
+      .lam-bullet { 
+        position: absolute; 
+        width: 25px; 
+        height: 25px; 
+        background: red;
+        border-radius: 25px;
+        transform: translate3d(-50%, -50%, 0);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+      }`;
+      this.images.forEach((image, imageIndex) => {
+        image.bullets.forEach((bullet, bulletIndex) => {
+          css += `.lam-bullet-${imageIndex + 1}-${bulletIndex + 1} {top: ${bullet.top}%; left: ${bullet.left}%;}`
+        })
+      });
+
+      return css;
     }
   }
 }

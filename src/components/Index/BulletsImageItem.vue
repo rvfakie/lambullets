@@ -4,14 +4,14 @@
 
     <div class="bullets-image-wrapper">
       <div class="bullets-image">
-        <img :src="image.url" @click="addBullet($event)">
+        <img :src="image.url" @click="addBullet($event, image.bullets)">
 
         <div
           class="bullet"
-          v-bind:style="getBulletStyles(bullet)"
-          @click="removeBullet(bullet.id)"
-          v-for="(bullet, bulletIndex) in bullets"
+          v-for="(bullet, bulletIndex) in image.bullets"
           :key="bullet.id"
+          :style="getBulletStyles(bullet)"
+          @click="removeBullet(bullet.id, image.bullets)"
         >
           <div class="bullet__number">{{bulletIndex + 1}}</div>
         </div>
@@ -20,10 +20,10 @@
     </div>
 
     <div class="bullets-image-panel">
-        <div class="bullets-image-info"></div>
-        <div class="bullets-image-code">
-          <BulletsCode :bullets="bullets" :image="image" :imageIndex="imageIndex" />
-        </div>
+      <div class="bullets-image-info"></div>
+      <div class="bullets-image-code">
+        <BulletsCode :image="image" :imageIndex="imageIndex" />
+      </div>
     </div>
     
   </div>
@@ -42,8 +42,8 @@ const getBulletPosition = (event) => {
   }
 
   let percentPosition = {
-    percentTop: pxPosition.top / event.currentTarget.clientHeight * 100,
-    percentLeft: pxPosition.left / event.currentTarget.clientWidth * 100
+    top: pxPosition.top / event.currentTarget.clientHeight * 100,
+    left: pxPosition.left / event.currentTarget.clientWidth * 100
   }
 
   return percentPosition;
@@ -66,48 +66,35 @@ export default {
 
   data(){
     return {
-      bullets: [],
       bulletDiameter: 25
     }
   },
 
   methods: {
 
-    addBullet(event){
+    addBullet(event, bullets){
       let bulletPosition = getBulletPosition(event);
 
-      this.bullets.push({
+      bullets.push({
         id: this.generateId(),
-        percentTop: bulletPosition.percentTop,
-        percentLeft: bulletPosition.percentLeft
-      });
-
-      this.$emit('change-bullets', {
-        bullets: this.bullets,
-        imageIndex: this.imageIndex,
-        imageId: this.image.id
+        top: bulletPosition.top,
+        left: bulletPosition.left
       });
     },
 
-    removeBullet(id){
-      let bulletIndex = this.bullets.findIndex(bullet => bullet.id === id);
+    removeBullet(id, bullets){
+      let bulletIndex = bullets.findIndex(bullet => bullet.id === id);
 
       if (bulletIndex !== -1) {
-        this.bullets.splice(bulletIndex, 1);
-
-        this.$emit('change-bullets', {
-          bullets: this.bullets,
-          imageIndex: this.imageIndex,
-          imageId: this.image.id
-        });
+        bullets.splice(bulletIndex, 1);
       }
       
     },
 
     getBulletStyles(bullet){
       return {
-        top: bullet.percentTop + '%',
-        left: bullet.percentLeft + '%',
+        top: bullet.top + '%',
+        left: bullet.left + '%',
         width: this.bulletDiameter + 'px',
         height: this.bulletDiameter + 'px',
       };
