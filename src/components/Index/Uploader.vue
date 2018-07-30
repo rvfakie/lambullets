@@ -61,7 +61,7 @@ export default {
     border-radius: 2px;
     cursor: pointer;
     text-transform: uppercase;
-    font-size: 14px;
+    font-size: 16px;
     font-family: "Proxima Nova Bold", sans-serif;
     position: relative;
     input[type="file"] {

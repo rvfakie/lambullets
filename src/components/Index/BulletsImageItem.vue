@@ -21,9 +21,6 @@
 
     <div class="bullets-image-panel">
       <div class="bullets-image-info"></div>
-      <div class="bullets-image-code">
-        <BulletsCode :image="image" :imageIndex="imageIndex" />
-      </div>
     </div>
     
   </div>
@@ -31,7 +28,6 @@
 
 
 <script>
-import BulletsCode from './BulletsCode'
 
 const getBulletPosition = (event) => {
   let imageWrapper = event.currentTarget.parentNode;
@@ -61,8 +57,6 @@ export default {
       required: true
     }
   },
-
-  components: { BulletsCode },
 
   data(){
     return {

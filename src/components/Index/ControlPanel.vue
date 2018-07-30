@@ -3,7 +3,7 @@
     <ControlPopup :images="images" :visible="visible" :togglePopup="togglePopup" />
     <div class="control-panel-wrapper">
       <div class="panel-container">
-        <div class="panel-button" @click="togglePopup()"><i class="fas fa-code"></i></div>
+        <div class="panel-button" :class="{'active': this.visible, 'disabled': !this.images.length}" @click="togglePopup()"><i class="fas fa-code"></i></div>
       </div>
     </div>
   </div>
@@ -52,6 +52,7 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    z-index: 1;
   }
   .panel-container {
     padding: 50px 10px;
@@ -74,12 +75,16 @@ export default {
     justify-content: center;
     align-items: center;
     color: #8B90A4;
-    &:hover {
+    &:hover, &.active {
       border: 1px solid #a9b7c4;
       color: #003cff;
     }
     &:last-child {
       margin-bottom: 0;
+    }
+    &.disabled {
+      pointer-events: none;
+      opacity: .6;
     }
   }
 
