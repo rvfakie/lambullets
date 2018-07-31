@@ -86,11 +86,11 @@ export default {
       }
       ${ this.images.map((image, imageIndex) => {
         return image.bullets.map((bullet, bulletIndex) => {
-          return `.lam-bullet-${imageIndex + 1}-${bulletIndex + 1} {top: ${bullet.top}%; left: ${bullet.left}%;}\n`;
-        });
-      }) }`;
+          return `.lam-bullet-${imageIndex + 1}-${bulletIndex + 1} {top: ${bullet.top}%; left: ${bullet.left}%;}`;
+        }).join(' ');
+      }).join('') }`;
 
-      return css.replace(/[,]+/g, "");
+      return css;
     },
     copyRaw(value) {
       this.copyToClipboard(value) ? this.status.text = 'Copied' :  this.status.text = 'Error';
@@ -134,6 +134,7 @@ export default {
     overflow: hidden;
     border-radius: 2px;
     background: #fff;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.55);
     &.visible {
       transform: translateY(0);
     }

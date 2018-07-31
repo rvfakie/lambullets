@@ -61,6 +61,7 @@ export default {
     border: 1px solid #f3f3f3;
     width: 100%;
     box-sizing: border-box;
+    border-radius: 2px;
   }
   .panel-button {
     height: 40px;
