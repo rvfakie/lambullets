@@ -1,9 +1,11 @@
 <template>
   <div class="control-panel-wrapper">
-    <ControlPopup :images="images" :visible="visible" :togglePopup="togglePopup" />
+    <CodePopup :images="images" :visible="codePopupVisible" :togglePopup="toggleCodePopup" :styleProp="pinStyle" />
+    <PinOptionsPopup :visible="pinOptionsPopupVisible" :togglePopup="togglePinOptionsPopup" :styles="pinStyles" :selected="selectedPinStyleIndex" :change="changePinStyle" />
     <div class="control-panel-wrapper">
       <div class="panel-container">
-        <div class="panel-button" :class="{'active': this.visible, 'disabled': !this.images.length}" @click="togglePopup()"><i class="fas fa-code"></i></div>
+        <div class="panel-button" :class="{'active': this.codePopupVisible, 'disabled': !this.images.length}" @click="toggleCodePopup()"><i class="fas fa-code"></i></div>
+        <div class="panel-button" :class="{'active': this.pinOptionsPopupVisible}" @click="togglePinOptionsPopup()"><i class="fas fa-cogs"></i></div>
       </div>
     </div>
   </div>
@@ -11,25 +13,51 @@
 
 
 <script>
-import ControlPopup from './ControlPopup'
+import CodePopup from './CodePopup'
+import PinOptionsPopup from './PinOptionsPopup'
 
 export default {
   name: 'ControlPanel',
-  components: { ControlPopup },
+  components: { CodePopup, PinOptionsPopup },
   props: {
     images: {
       type: Array,
+      required: true
+    },
+    options: {
+      type: Object,
+      required: true
+    },
+    changePinStyle: {
+      type: Function,
       required: true
     }
   },
   data(){
     return {
-      visible: false
+      codePopupVisible: false,
+      pinOptionsPopupVisible: false
+    }
+  },
+  computed: {
+    selectedPinStyleIndex() {
+      return this.options.pin.selected;
+    },
+    pinStyle() {
+      return this.options.pin.styles[this.selectedPinStyleIndex];
+    },
+    pinStyles() {
+      return this.options.pin.styles;
     }
   },
   methods: {
-    togglePopup() {
-      this.visible = !this.visible;
+    toggleCodePopup() {
+      this.codePopupVisible = !this.codePopupVisible;
+      this.pinOptionsPopupVisible = false;
+    },
+    togglePinOptionsPopup() {
+      this.pinOptionsPopupVisible = !this.pinOptionsPopupVisible;
+      this.codePopupVisible = false;
     }
   }
 }

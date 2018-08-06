@@ -19,8 +19,8 @@
 <script>
 
 export default {
-  name: 'ControlPopup',
-  props: ['visible', 'togglePopup', 'images'],
+  name: 'CodePopup',
+  props: ['visible', 'togglePopup', 'images', 'styleProp'],
   data(){
     return {
       status: {
@@ -73,11 +73,14 @@ export default {
       const css = `
       .lam-bullet-image { position: relative !important; }
       .lam-bullet { 
+        width: ${this.styleProp.diameter}px; 
+        height: ${this.styleProp.diameter}px; 
+        background: ${this.styleProp.background};
+        border: ${this.styleProp.border};
+        font-size: ${this.styleProp.numbered ? '12px' : '0'};
         position: absolute; 
-        width: 25px; 
-        height: 25px; 
-        background: red;
-        border-radius: 25px;
+        box-sizing: border-box;
+        border-radius: 50%;
         transform: translate3d(-50%, -50%, 0);
         display: flex;
         justify-content: center;

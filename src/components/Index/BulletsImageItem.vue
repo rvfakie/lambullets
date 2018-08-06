@@ -4,6 +4,7 @@
 
     <div class="bullets-image-wrapper">
       <div class="bullets-image">
+        <div class="bullets-image-error" v-if="image.error">{{ image.error }}</div>
         <img :src="image.url" @click="addBullet($event, image.bullets)">
 
         <div
@@ -13,7 +14,7 @@
           :style="getBulletStyles(bullet)"
           @click="removeBullet(bullet.id, image.bullets)"
         >
-          <div class="bullet__number">{{bulletIndex + 1}}</div>
+          {{bulletIndex + 1}}
         </div>
 
       </div>
@@ -55,17 +56,26 @@ export default {
     imageIndex: {
       type: Number,
       required: true
+    },
+    options: {
+      type: Object,
+      required: true
     }
   },
-
   data(){
     return {
       bulletDiameter: 25
     }
   },
-
+  computed: {
+    selected() {
+      return this.options.pin.selected;
+    },
+    style() {
+      return this.options.pin.styles[this.selected];
+    }
+  },
   methods: {
-
     addBullet(event, bullets){
       let bulletPosition = getBulletPosition(event);
 
@@ -75,26 +85,25 @@ export default {
         left: bulletPosition.left
       });
     },
-
     removeBullet(id, bullets){
       let bulletIndex = bullets.findIndex(bullet => bullet.id === id);
 
       if (bulletIndex !== -1) {
         bullets.splice(bulletIndex, 1);
       }
-      
     },
-
     getBulletStyles(bullet){
       return {
         top: bullet.top + '%',
         left: bullet.left + '%',
-        width: this.bulletDiameter + 'px',
-        height: this.bulletDiameter + 'px',
+        width: this.style.diameter + 'px',
+        height: this.style.diameter + 'px',
+        background: this.style.background,
+        border: this.style.border,
+        'font-size': this.style.numbered ? '12px' : '0px'
       };
     }
-
-  }
+  },
 }
 
 </script>
@@ -113,6 +122,23 @@ export default {
     margin-bottom: 30px;
   }
 
+  .bullets-image-error {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-family: "Proxima Nova Black", sans-serif;
+    text-align: center;
+    font-size: 28px;
+    text-transform: uppercase;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 0, 0, 0.637);
+  }
+
   .bullets-image{
     position: relative;
     display: inline-block;
@@ -126,25 +152,14 @@ export default {
 
     .bullet{
       position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 25px;
-      height: 25px;
       display: flex;
       border-radius: 50%;
-      background: #003cff;
-      box-shadow: inset 0 0 0 2px black;
       transform: translate(-50%,-50%);
       cursor: pointer;
-      
-      .bullet__number{
-        margin: auto;
-        font-size: 12px;
-        line-height: 15px;
-        font-weight: bold;
-        color: white;
-        user-select: none;
-      }
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
     }
   }
 

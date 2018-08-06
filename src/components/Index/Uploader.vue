@@ -26,9 +26,16 @@ export default {
         if (key !== 'length' && key !== 'item') {
           const id = this.generateId();
           const el = input.files[key];
+          const replacedName = el.name.replace( /^\D+/g, '');
 
-          this.images.push({id, name: parseInt(el.name.split('.')[0]), bullets: []});
-          this.images.sort((a,b) => { return a.name > b.name });
+          this.images.push({
+            id, 
+            order: parseInt(replacedName), 
+            name: el.name,
+            error: !replacedName ? 'Image name must contain number for ordering' : null,
+            bullets: []
+          });
+          this.images.sort((a,b) => { return a.order - b.order });
           el.id = id;
           
           const reader = new FileReader();
